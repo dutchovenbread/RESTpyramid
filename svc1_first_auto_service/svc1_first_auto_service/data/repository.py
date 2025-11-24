@@ -19,6 +19,13 @@ class Repository:
     return cls.__car_data.get(car_id)
   
   @classmethod
+  def add_car(cls, car_data):
+    key = str(uuid.uuid4())
+    car_data['id'] = key
+    cls.__car_data[key] = car_data
+    return car_data
+  
+  @classmethod
   def __load_data(cls):
     if cls.__car_data:
       return
