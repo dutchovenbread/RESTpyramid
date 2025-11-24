@@ -2,7 +2,8 @@
     <div metal:fill-slot="content">
 
         <div class="content">
-            <h1><span class="font-semi-bold">Pyramid</span> <span class="smaller">Starter project</span></h1>
+            <h1><span class="font-semi-bold">Auto Service</span> <span class="smaller">A basic RESTful Auto Service</span></h1>
+            <p>Feel free to use our API to shop for cars.</p>
             <p class="lead">Welcome to <span class="font-normal">${project}</span>, a&nbsp;Pyramid
                 application generated&nbsp;by<br><span class="font-normal">Cookiecutter</span>.</p>
         </div>
