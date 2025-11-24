@@ -8,7 +8,7 @@ from svc1_first_auto_service.data.repository import Repository
              request_method='GET', 
              renderer='json')
 def all_autos(request):
-    cars = Repository.all_cars()
+    cars = Repository.all_cars(limit=25)
     return {'autos': cars}
 
 @view_config(route_name='auto_api',
