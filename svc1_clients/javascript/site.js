@@ -31,7 +31,7 @@ function loadCarDetails() {
 }
 
 function populateCarData(car) {
-  $('#car_details').fadeout(function(){
+  $("#car_details").fadeOut(function(){
     $("#name").text(car.name)
     $("#price").text(car.price)
     $("#year").text(car.year)
