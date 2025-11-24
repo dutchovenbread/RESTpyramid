@@ -26,6 +26,14 @@ class Repository:
     return car_data
   
   @classmethod
+  def update_car(cls, car_id, car_data):
+    if car_id not in cls.__car_data:
+      raise ValueError("Car ID does not exist.")
+    car_data['id'] = car_id
+    cls.__car_data[car_id] = car_data
+    return car_data
+  
+  @classmethod
   def __load_data(cls):
     if cls.__car_data:
       return

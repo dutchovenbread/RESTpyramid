@@ -27,17 +27,32 @@ def single_auto(request : Request):
              renderer='json')
 def create_auto(request : Request):
   try:
-    print("Received POST")
-    print(f"request as bytes [{request.as_bytes()}]")
-    print(f"request.keys[{list(request.__dict__.keys())}]")
-    print( request.json_body)
     car_data = request.json_body
   except:
     return Response(status=400, body="Could not parse your post as JSON.")
   # TODO: Validate
   try:
     car_data = Repository.add_car(car_data)
-    return car_data
+    return Response(json_body=car_data, status=201)
   except:
     return Response(status=400, body="Could not save car.")
 
+@view_config(route_name='auto_api',
+             request_method='PUT')
+def update_auto(request : Request):
+  car_id = request.matchdict.get('car_id')
+  car = Repository.car_by_id(car_id)
+  if not car:
+    msg = f"Car with id {car_id} not found"
+    return Response(status=404, json_body={'error': msg})
+  
+  try:
+    car_data = request.json_body
+  except:
+    return Response(status=400, body="Could not parse your post as JSON.")
+  # TODO: Validate
+  try:
+    car_data = Repository.update_car(car_id, car_data)
+    return Response(status=204, body="Car updated successfully.")
+  except:
+    return Response(status=400, body="Could not update car.")
