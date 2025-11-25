@@ -31,4 +31,4 @@ def allow_cors(config):
 def configure_renderers(config):
   json_renderer = JSON(indent=2)
   json_renderer.add_adapter(Car, lambda c, _: c.to_dict())
-  config.add_renderer('json', json_renderer)
+  config.add_renderer('pretty_json', json_renderer)
