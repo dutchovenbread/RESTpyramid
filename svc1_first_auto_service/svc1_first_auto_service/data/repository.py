@@ -47,3 +47,10 @@ class Repository:
         key = str(uuid.uuid4())
         row['id'] = key
         cls.__car_data[key] = row
+  @classmethod
+  def delete_car(cls, car_id):
+    print(f"Deleting car with id {car_id}")
+    print(f"Car: {cls.__car_data[car_id]}")
+    # if car_id not in cls.__car_data:
+    #   raise ValueError("Car ID does not exist.")
+    del cls.__car_data[car_id]
