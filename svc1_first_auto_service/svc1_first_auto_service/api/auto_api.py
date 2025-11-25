@@ -2,6 +2,7 @@ from pyramid.request import Request
 from pyramid.response import Response
 from pyramid.view import view_config
 from svc1_first_auto_service.data.repository import Repository
+from svc1_first_auto_service.data.car import Car
 
 
 @view_config(route_name='autos_api',
@@ -28,13 +29,16 @@ def single_auto(request : Request):
 def create_auto(request : Request):
   try:
     car_data = request.json_body
+    car = Car.from_dict(car_data)
   except:
     return Response(status=400, body="Could not parse your post as JSON.")
   # TODO: Validate
   try:
-    car_data = Repository.add_car(car_data)
-    return Response(json_body=car_data, status=201)
-  except:
+    car = Repository.add_car(car)
+    response = Response(json_body = car.to_dict())
+    response.status = 201
+    return response
+  except: 
     return Response(status=400, body="Could not save car.")
 
 @view_config(route_name='auto_api',
@@ -48,11 +52,12 @@ def update_auto(request : Request):
   
   try:
     car_data = request.json_body
+    car = Car.from_dict(car_data)
   except:
     return Response(status=400, body="Could not parse your post as JSON.")
   # TODO: Validate
   try:
-    car_data = Repository.update_car(car_id, car_data)
+    car_data = Repository.update_car(car)
     return Response(status=204, body="Car updated successfully.")
   except:
     return Response(status=400, body="Could not update car.")
