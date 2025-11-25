@@ -56,3 +56,20 @@ def update_auto(request : Request):
     return Response(status=204, body="Car updated successfully.")
   except:
     return Response(status=400, body="Could not update car.")
+
+@view_config(route_name='auto_api',
+             request_method='DELETE')
+def delete_auto(request : Request):
+  car_id = request.matchdict.get('car_id')
+  car = Repository.car_by_id(car_id)
+  if not car:
+    msg = f"Car with id {car_id} not found"
+    return Response(status=404, json_body={'error': msg})
+  
+  
+  # TODO: Validate
+  try:
+    Repository.delete_car(car_id)
+    return Response(status=204, body="Car deleted successfully.")
+  except:
+    return Response(status=400, body="Could not delete car.")
