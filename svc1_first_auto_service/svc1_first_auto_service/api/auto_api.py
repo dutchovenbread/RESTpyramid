@@ -7,14 +7,14 @@ from svc1_first_auto_service.data.car import Car
 
 @view_config(route_name='autos_api',
              request_method='GET', 
-             renderer='json')
+             renderer='pretty_json')
 def all_autos(_):
     cars = Repository.all_cars(limit=25)
     return cars
 
 @view_config(route_name='auto_api',
              request_method='GET', 
-             renderer='json')
+             renderer='pretty_json')
 def single_auto(request : Request):
     car_id = request.matchdict.get('car_id')
     car = Repository.car_by_id(car_id)
@@ -25,7 +25,7 @@ def single_auto(request : Request):
 
 @view_config(route_name='autos_api',
              request_method='POST', 
-             renderer='json')
+             renderer='pretty_json')
 def create_auto(request : Request):
   try:
     car_data = request.json_body
@@ -35,9 +35,7 @@ def create_auto(request : Request):
   # TODO: Validate
   try:
     car = Repository.add_car(car)
-    response = Response(json_body = car.to_dict())
-    response.status = 201
-    return response
+    return Response(status=201, json_body=car.to_dict())
   except: 
     return Response(status=400, body="Could not save car.")
 
